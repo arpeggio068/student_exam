@@ -9,6 +9,13 @@ function form2PrvBtn(){
        $('#showNeed_pfilling').show()
      }
      else{
+      
+       const fields_need_pfilling = document.querySelectorAll('input[name="need_pfilling"]');     
+      
+       Array.prototype.forEach.call(fields_need_pfilling,function(el){               
+               el.checked = false;            
+       });       
+       $('#pextract').val('') 
        $('#showNeed_pfilling').hide()
      }
   }
@@ -19,6 +26,10 @@ function form2PrvBtn(){
        $('#showNeed_sealant').show()
      }
      else{
+       const fields_need_sealant = document.querySelectorAll('input[name="need_sealant"]');
+       Array.prototype.forEach.call(fields_need_sealant,function(el){               
+            el.checked = false;           
+       });
        $('#showNeed_sealant').hide()
      }
 

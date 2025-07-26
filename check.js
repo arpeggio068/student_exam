@@ -122,6 +122,9 @@ function validateForm1(){
 
      let need_pfilling = [] // จัดการตัวเลือกแบบ checkbox
      $('input[name="need_pfilling"]:checked').each((i,ele)=>{need_pfilling.push($(ele).val())})
+
+     let need_sealant = []
+     $('input[name="need_sealant"]:checked').each((i,ele)=>{need_sealant.push($(ele).val())})
      
      const pteeth_array = ["11","12","13","14","15","16","17",
                            "21","22","23","24","25","26","27",
@@ -143,6 +146,16 @@ function validateForm1(){
              
               sw = false;            
             break;
+        case need_sealant.length > Number(pteeth) : 
+            Swal.fire({
+                     position: 'center',
+                     icon: 'error',
+                     text: "จำนวนฟันที่ต้องเคลือบหลุมร่องฟัน > จำนวนฟันแท้ทั้งหมด"
+                     
+                  })        
+             
+              sw = false;            
+            break;    
         case need_pfilling.length > Number(pcaries) : 
             Swal.fire({
                      position: 'center',

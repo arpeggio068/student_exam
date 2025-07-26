@@ -131,6 +131,10 @@ function setRec(row_number){
        $('#showNeed_dfilling').show()
      }
      else{
+       const fields_need_dfilling = document.querySelectorAll('input[name="need_dfilling"]');
+       Array.prototype.forEach.call(fields_need_dfilling,function(el){               
+            el.checked = false;            
+       });
        $('#showNeed_dfilling').hide()
      }
 
@@ -142,6 +146,10 @@ function setRec(row_number){
        $('#showNeed_dextract').show()
      }
      else{
+       const fields_need_dextract = document.querySelectorAll('input[name="need_dextract"]');
+       Array.prototype.forEach.call(fields_need_dextract,function(el){               
+            el.checked = false;            
+       });
        $('#showNeed_dextract').hide()
      }
 
