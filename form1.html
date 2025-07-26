@@ -1,0 +1,265 @@
+<form class="needs-validation1" novalidate>
+<div class="row my-2">
+        <input id="id_main" type="hidden">
+        <input id="num" value="" type="hidden">
+        <div class="col"> 
+          <label class="label_main">ชื่อ-สกุล</label>
+          <input id="name" class="form-control" required>
+          <div style="text-align:left;" class = "invalid-feedback">จำเป็น</div>
+        </div>
+</div>
+<div class="row my-2">       
+        <div class="col"> 
+          <label class="label_main">โรงเรียน</label>
+          <input disabled id="form_school" class="form-control">
+        </div>
+</div>
+<div class="row my-2">        
+        <div class="col"> 
+          <label class="label_main">ระดับชั้น</label>
+         <select id="form_class" class="form-select" required>
+           <option></option>
+           <option>อ.1</option>
+           <option>อ.2</option>
+           <option>อ.3</option>
+           <option>ป.1</option>
+           <option>ป.2</option>
+           <option>ป.3</option>
+           <option>ป.4</option>
+           <option>ป.5</option>
+           <option>ป.6</option>
+           <option>ม.1</option>
+           <option>ม.2</option>
+           <option>ม.3</option>
+         </select>
+         <div style="text-align:left;" class = "invalid-feedback">จำเป็น</div>
+        </div>
+</div>
+<div class="row my-2">        
+        <div class="col"> 
+          <label class="label_main">ห้อง</label>
+         <select id="form_room" class="form-select">
+           <option></option>
+           <option>1</option>
+           <option>2</option>
+           <option>3</option>
+           <option>4</option>
+           <option>5</option>
+         </select>
+        </div>
+</div>
+<div class="row my-2">
+        <div class="col"> 
+          <label class="label_main">a จำนวนฟันน้ำนมทั้งหมด</label>
+          <input id="dteeth" type="number" min="0" max="20" step="1" class="form-control" onchange="showNeed_dextract()" required>
+          <div style="text-align:left;" class = "invalid-feedback">จำเป็น</div>
+        </div>
+</div>
+<div class="row my-2">
+        <div class="col"> 
+          <label class="label_main">b จำนวนฟันน้ำนมผุ</label>
+          <input id="dcaries" type="number" min="0" max="20" step="1" class="form-control" onchange="showNeed_dfilling()" required>
+          <div style="text-align:left;" class = "invalid-feedback">จำเป็น</div>
+        </div>
+</div>
+
+<div id="showNeed_dfilling">
+    <div class="row my-2"> 
+      <div class="col">
+        <label class="label_main">c ฟันน้ำนมที่ต้องอุด (เฉพาะฟันหลัง)</label>
+      </div>  
+    </div>  
+
+    <div class="row my-2">        
+        <div class="col">          
+           
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf54" value="54" >
+              <span class="checkmark">54</span>
+            </label>
+
+             <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf55" value="55" >
+              <span class="checkmark">55</span>
+             </label>         
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf64" value="64" >
+              <span class="checkmark">64</span>
+            </label>
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf65" value="65" >
+              <span class="checkmark">65</span>
+            </label>
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf74" value="74" >
+              <span class="checkmark">74</span>
+            </label>
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf75" value="75" >
+              <span class="checkmark">75</span>
+            </label>
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf84" value="84" >
+              <span class="checkmark">84</span>
+            </label>
+
+            <label class="form-check form-check-inline container_cb">
+              <input class="form-check-input" name="need_dfilling" type="checkbox" id="idf85" value="85" >
+              <span class="checkmark">85</span>
+            </label>                  
+        </div>
+    </div>
+</div>
+
+<div id="showNeed_dextract">
+    <div class="row my-2"> 
+      <div class="col">
+        <label class="label_main">d ฟันน้ำนมที่ต้องถอน</label>
+      </div>  
+    </div>
+
+    <div class="row my-2">
+      <div class="col">
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide51" value="51" >
+            <span class="checkmark">51</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide52" value="52" >
+            <span class="checkmark">52</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide53" value="53" >
+            <span class="checkmark">53</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide54" value="54" >
+            <span class="checkmark">54</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide55" value="55" >
+            <span class="checkmark">55</span>
+          </label>
+      </div>    
+    </div>
+
+    <div class="row my-2">
+      <div class="col">
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide61" value="61" >
+            <span class="checkmark">61</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide62" value="62" >
+            <span class="checkmark">62</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide63" value="63" >
+            <span class="checkmark">63</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide64" value="64" >
+            <span class="checkmark">64</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide65" value="65" >
+            <span class="checkmark">65</span>
+          </label>
+      </div>    
+    </div>
+
+    <div class="row my-2">
+      <div class="col">
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide71" value="71" >
+            <span class="checkmark">71</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide72" value="72" >
+            <span class="checkmark">72</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide73" value="73" >
+            <span class="checkmark">73</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide74" value="74" >
+            <span class="checkmark">74</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide75" value="75" >
+            <span class="checkmark">75</span>
+          </label>
+      </div>    
+    </div>
+
+    <div class="row my-2">
+      <div class="col">
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide81" value="81" >
+            <span class="checkmark">81</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide82" value="82" >
+            <span class="checkmark">82</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide83" value="83" >
+            <span class="checkmark">83</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide84" value="84" >
+            <span class="checkmark">84</span>
+          </label>
+
+          <label class="form-check form-check-inline container_cb">
+            <input class="form-check-input" name="need_dextract" type="checkbox" id="ide85" value="85" >
+            <span class="checkmark">85</span>
+          </label>
+      </div>    
+    </div>
+</div>
+
+<div class="row my-2">
+        <div class="col"> 
+          <label class="label_main">e ฟันน้ำนมที่ถูกถอน</label>
+         <input id="dextract" type="number" min="0" max="20" step="1" class="form-control" value="0">
+        </div>
+</div>
+<div class="row my-2">
+        <div class="col"> 
+          <label class="label_main">f ฟันน้ำนมที่ได้รับการอุด</label>
+         <input id="dfilling" type="number" min="0" max="20" step="1" class="form-control" value="0">
+        </div>
+</div>
+
+<div class="row my-2">
+  <div class="col">
+   <button class="btn btn-primary" type="button" onclick="form1PrvBtn()">ก่อนหน้า</button>
+  </div>
+  <div class="col">
+   <button class="btn btn-primary w3-right" type="submit" onclick="form1NextBtn()">ถัดไป</button>
+  </div>
+</div>  
+</form>
+
