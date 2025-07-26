@@ -15,7 +15,7 @@ function form2PrvBtn(){
        Array.prototype.forEach.call(fields_need_pfilling,function(el){               
                el.checked = false;            
        });       
-       $('#pextract').val('') 
+       $('#need_pextract').val('') 
        $('#showNeed_pfilling').hide()
      }
   }
