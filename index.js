@@ -127,6 +127,40 @@
     
   }
 
+  async function checkExpired(item_name){
+     const lUserData = await store.getItem(item_name);
+     const init = lUserData || null;
+     const now = Date.now();
+     const numDays = 1 * 24 * 60 * 60 * 1000; //1 day
+     //const numDays = 5 * 60 * 1000; //5 min
+
+     if (!init || !init.timestamp || (now - init.timestamp > numDays)) {
+          $('#school').html('')
+          $('#class_').html('')
+          $('#room').html('')
+          $('#table_app').html('')
+          return true
+     } else {
+          return false            
+     }
+  }
+
+  async function beforeSetTable(){
+      const check = await checkExpired("student_data")
+      if(check){
+        await store.removeItem("student_data")
+        Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                text: 'ข้อมูลหมดอายุ กรุณาโหลดใหม่',
+                showConfirmButton: true,
+                timer: 5000
+            });
+      }else{
+        setTable()
+      }
+  }
+
   function setTable(){
      document.getElementById("showBtn").disabled = true;
      listStudent()
@@ -313,11 +347,23 @@
 
   async function offlineArrayReturned() {
     try {
+      const check = await checkExpired("student_data")
+      if(check){
+        await store.removeItem("student_data")
+        Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                text: 'ข้อมูลหมดอายุ กรุณาโหลดใหม่',
+                showConfirmButton: true,
+                //timer: 5000
+            });
+        return;
+      }
+      
       const lData = await store.getItem("student_data");
       console.log("Offline Data retrieved successfully");
-
-      // ถ้าไม่มีข้อมูล ให้ใช้ array ว่าง []
-      const init = lData ? JSON.parse(lData) : [];
+      
+      const init = lData ? JSON.parse(lData.arrayofArrays) : [];
 
       const school = document.getElementById("school");
 
@@ -340,7 +386,12 @@
   async function afterDropdownArrayReturned(arrayofArrays) {
     try {
       // Save data
-      await store.setItem("student_data", arrayofArrays);
+      const obj_offline = {
+        arrayofArrays:arrayofArrays,
+        timestamp: Date.now()
+
+      }
+      await store.setItem("student_data", obj_offline);
       console.log("Loaded Data saved successfully");
 
       // Retrieve data
@@ -348,7 +399,7 @@
       console.log("Student Data retrieved successfully");
 
       // Parse and use data
-      arrayOfValues = JSON.parse(lData).filter(function(r){return true;});
+      arrayOfValues = JSON.parse(lData.arrayofArrays).filter(function(r){return true;});
       const school = document.getElementById("school");
 
       if (arrayOfValues) {
@@ -383,7 +434,7 @@
      const school = document.getElementById("school").value;
      const filterArrayOfValues = arrayOfValues.filter(function(r){return r['school'] === school});
      addUniqueOptionsToDropdownList(class_,filterArrayOfValues,'class_'); 
-     afterSecondDropdownChanged(arrayOfValues);
+     afterSecondDropdownChanged();
   }
 
  function afterSecondDropdownChanged(){
