@@ -127,39 +127,54 @@
     
   }
 
-  async function checkExpired(item_name){
-     const lUserData = await store.getItem(item_name);
-     const init = lUserData || null;
-     const now = Date.now();
-     const numDays = 1 * 24 * 60 * 60 * 1000; //1 day
-     //const numDays = 5 * 60 * 1000; //5 min
+  async function checkExpired(item_name) {
+    try {
+      const lUserData = await store.getItem(item_name);
+      const init = lUserData || null;
+      const now = Date.now();
+      const numDays = 1 * 24 * 60 * 60 * 1000; // 1 day
+      // const numDays = 5 * 60 * 1000; // 5 min
 
-     if (!init || !init.timestamp || (now - init.timestamp > numDays)) {
-          $('#school').html('')
-          $('#class_').html('')
-          $('#room').html('')
-          $('#table_app').html('')
-          return true
-     } else {
-          return false            
-     }
+      if (!init || !init.timestamp || (now - init.timestamp > numDays)) {
+        $('#school').html('');
+        $('#class_').html('');
+        $('#room').html('');
+        $('#table_app').html('');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.warn("error on checkExpired function:", err);
+      // ล้าง UI เผื่อข้อมูลผิดพลาดจริง
+      $('#school').html('');
+      $('#class_').html('');
+      $('#room').html('');
+      $('#table_app').html('');
+      return true; // ให้ถือว่า expired ไปเลยเพื่อความปลอดภัย
+    }
   }
 
   async function beforeSetTable(){
+    try {
       const check = await checkExpired("student_data")
       if(check){
         await store.removeItem("student_data")
         Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                text: 'ข้อมูลหมดอายุ กรุณาโหลดใหม่',
-                showConfirmButton: true,
-                timer: 5000
-            });
-      }else{
+            icon: 'warning',
+            text: 'ข้อมูลหมดอายุ กรุณาโหลดใหม่',
+            showConfirmButton: true,
+            timer: 5000
+        });
+      } else {
         setTable()
       }
+    } catch (err) {
+      console.error("problem of local cache :", err);
+      // ไม่แสดง Swal ซ้ำ เพราะผู้ใช้ต้องโหลดใหม่อยู่ดี
+    }
   }
+
 
   function setTable(){
      document.getElementById("showBtn").disabled = true;
@@ -183,20 +198,27 @@
      document.getElementById("showBtn").disabled = false; 
   }
 
-  async function clearSchoolData(){
-    if(confirm("ระบบจะล้างข้อมูลนักเรียนในหน่วยความจำ\nยกเว้นข้อมูลที่รออัพโหลด!")){     
-     await store.removeItem("student_data").then(function() {
-                      console.log("Main Data removed successfully");
-                    }).catch(function(error) {
-                      console.log("Error while removing main data: " + error);
-                    });       
-     $('#school').html('')
-     $('#class_').html('')
-     $('#room').html('')
-     $('#table_app').html('')
-     
-    } 
+  async function clearSchoolData() {
+    if (confirm("ระบบจะล้างข้อมูลนักเรียนในหน่วยความจำ\nยกเว้นข้อมูลที่รออัพโหลด!")) {
+      try {
+        await store.removeItem("student_data");
+        console.log("Main student Data removed successfully");
+        // ล้าง UI
+        $('#school').html('');
+        $('#class_').html('');
+        $('#room').html('');
+        $('#table_app').html('');
+      } catch (error) {
+        console.warn("error on remove Main student data: ", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด',
+          text: 'ไม่สามารถล้างข้อมูลได้ กรุณาลองใหม่',
+        });
+      }
+    }
   }
+
 
   function loadAlert(){
     let txt;
@@ -210,25 +232,27 @@
     //document.getElementById("demo").innerHTML = txt;
   }
 
-  async function upLoad(){
-    const all = await store.getItem("all_rec_student").then(function(value) {
-        console.log("all_rec_student retrieved successfully");
-        return value
-    }).catch(function(error) {
-        console.log("Error while retrieving all_rec_student: " + error);
-    });
+  async function upLoad() {    
+    try {
+      const all = await store.getItem("all_rec_student");
+      console.log("all_rec_student retrieved successfully");
 
-    const obj = await JSON.parse(all)
-    if(!obj){
-      alert("ไม่มีข้อมูลให้อัพโหลด")
+      const obj = all ? JSON.parse(all) : null;
+
+      if (!obj) {
+        alert("ไม่มีข้อมูลให้อัพโหลด");
+        return;
+      }
+
+      if (confirm("กด ตกลง เพื่อยืนยันการอัพโหลดข้อมูล!")) {
+        loadingStart();
+        await saveRecord(obj);
+      }
+    } catch (error) {
+      console.error("Error while retrieving or parsing all_rec_student:", error);
+      alert("เกิดข้อผิดพลาดระหว่างโหลดข้อมูลจากอุปกรณ์\nกรุณาลองใหม่");
     }
-    else{
-        if(confirm("กด ตกลง เพื่อยืนยันการอัพโหลดข้อมูล!")){ 
-           loadingStart();           
-           await saveRecord(obj);     
-        }      
-    }
-    
+
   }
 
 //--------------   server api -----------------------------------------------------------------------------------------
@@ -269,6 +293,7 @@
 
             }
             else{
+              await store.removeItem("student_data")
               Swal.fire({
                 position: 'center',
                 icon: 'warning',
@@ -318,11 +343,12 @@
                 
                 const arrayofArrays = data.student //json data
                 //console.log(arrayofArrays)
-                afterDropdownArrayReturned(arrayofArrays)                
+                await afterDropdownArrayReturned(arrayofArrays)                
                 console.log("save student data")        
 
             }
             else{
+              await store.removeItem("student_data")
               Swal.fire({
                 position: 'center',
                 icon: 'warning',
