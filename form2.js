@@ -89,7 +89,7 @@ function form2PrvBtn(){
     rec['etc'] = $('#etc').val()
     rec['dentist'] = $('#dentist').val()
 
-    const all = await store.getItem("all_rec_student").then(function(value) {
+    /*const all = await store.getItem("all_rec_student").then(function(value) {
         console.log("all_rec_student retrieved successfully");
         return value
     }).catch(function(error) {
@@ -99,29 +99,66 @@ function form2PrvBtn(){
     all_rec_student = await JSON.parse(all)    
     if(all_rec_student == null || all_rec_student == 'undefined'){
       all_rec_student = []
+    }*/    
+
+    try {
+      const all = await store.getItem("all_rec_student");
+      console.log("all_rec_student retrieved successfully");
+
+      all_rec_student = all ? JSON.parse(all) : [];
+
+      // กรณี JSON.parse สำเร็จแต่ข้อมูลไม่ใช่ array
+      if (!Array.isArray(all_rec_student)) {
+         all_rec_student = [];
+      }
+    } catch (error) {
+      console.error("Error while retrieving or parsing all_rec_student:", error);
+      all_rec_student = [];
     }
+
 
     const indx = all_rec_student.findIndex(r => r['id'] === rec['id']);
     all_rec_student.splice(indx, indx >= 0 ? 1 : 0);
     all_rec_student.push(rec);
 
-    if(arrayOfValues != null){
+    if(Array.isArray(arrayOfValues)){
       const indx_main = arrayOfValues.findIndex(r => r['id'] === rec['id']);
       arrayOfValues.splice(indx_main, indx_main >= 0 ? 1 : 0);
       arrayOfValues.push(rec);
     }
     
-    await store.setItem("student_data", JSON.stringify(arrayOfValues)).then(function() {
+    /*await store.setItem("student_data", JSON.stringify(arrayOfValues)).then(function() {
        console.log("New Data saved successfully");       
     }).catch(function(error) {
        console.log("Error while saving new data: " + error);
-    });   
+    }); */  
+
+    try {
+      const existing = await store.getItem("student_data");
+      const timestamp = existing?.timestamp || Date.now();
+
+      const obj_offline = {
+         arrayofArrays: JSON.stringify(arrayOfValues), // เก็บเป็น JSON string
+         timestamp: timestamp
+      };
+
+      await store.setItem("student_data", obj_offline);
+      console.log("student_data saved successfully with timestamp:", timestamp);
+    } catch (error) {
+      console.error("Error while saving student_data:", error);
+    }
     
-    await store.setItem("all_rec_student", JSON.stringify(all_rec_student)).then(function() {
+    /*await store.setItem("all_rec_student", JSON.stringify(all_rec_student)).then(function() {
        console.log("New Data for upload saved successfully");       
     }).catch(function(error) {
        console.log("Error while saving new data for upload: " + error);
-    });     
+    });*/  
+    try {
+      await store.setItem("all_rec_student", JSON.stringify(all_rec_student));
+      console.log("all_rec_student saved successfully");
+    } catch (error) {
+      console.error("Error while saving all_rec_student:", error);
+    }   
 
     $('#val_total').text("  "+all_rec_student.length); 
     

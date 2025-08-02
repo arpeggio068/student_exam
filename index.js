@@ -79,8 +79,7 @@
          let d = Number(b['num'])
          return c-d
        })        
-       //list_filter = filterArrayOfValues
-      
+       //list_filter = filterArrayOfValues      
 
      let result = `<table id="data-table" class="table table-striped table-bordered" style="width:100%">
        <thead>
@@ -253,7 +252,7 @@
       alert("เกิดข้อผิดพลาดระหว่างโหลดข้อมูลจากอุปกรณ์\nกรุณาลองใหม่");
     }
 
-  }
+  } 
 
 //--------------   server api -----------------------------------------------------------------------------------------
 //--------------   server api -----------------------------------------------------------------------------------------
@@ -318,6 +317,7 @@
 
   async function studentLoad() {       
         const obj_json = JSON.stringify({id:gId})
+        //console.log("gId: ",gId)
         let formData = new FormData();
         formData.append('action', 'studentLoad');       
         formData.append('data', obj_json);
@@ -413,7 +413,7 @@
     try {
       // Save data
       const obj_offline = {
-        arrayofArrays:arrayofArrays,
+        arrayofArrays:arrayofArrays, // arrayofArrays is json string
         timestamp: Date.now()
 
       }
@@ -484,6 +484,42 @@
      });  
   }
 
+  async function callOffLineData(){
+    try{
+        await offlineArrayReturned();        
+        const all = await store.getItem("all_rec_student");
+        console.log("all_rec_student retrieved successfully");
+       
+        all_rec_student = [];
+        if (all) {
+          try {
+            const parsed = JSON.parse(all);
+            if (Array.isArray(parsed)) {
+              all_rec_student = parsed;
+            } else {
+              console.warn("all_rec_student is not an array");
+            }
+          } catch (e) {
+            console.warn("Invalid JSON in all_rec_student:", e);
+          }
+        }
+        // แสดงผลจำนวน
+        $('#val_total').text(" " + all_rec_student.length)
+      }
+      catch (error){
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          text: 'เกิดข้อผิดพลาดในการเรียกข้อมูล off line โปรดลองใหม่อีกครั้ง',
+          showConfirmButton: true
+        });
+        console.error("Fetch Error:", error.message);
+      }
+      finally {
+       loadingEnd(); 
+      }
+  }
+
   async function getDataAPI(url) {
     try {
       const response = await fetch(url, {
@@ -505,26 +541,8 @@
           timer: 3000
         });
 
-        await offlineArrayReturned();        
-        const all = await store.getItem("all_rec_student");
-        console.log("all_rec_student retrieved successfully");
-       
-        all_rec_student = [];
-        if (all) {
-          try {
-            const parsed = JSON.parse(all);
-            if (Array.isArray(parsed)) {
-              all_rec_student = parsed;
-            } else {
-              console.warn("all_rec_student is not an array");
-            }
-          } catch (e) {
-            console.warn("Invalid JSON in all_rec_student:", e);
-          }
-        }
-
-        // แสดงผลจำนวน
-        $('#val_total').text(" " + all_rec_student.length);
+        await callOffLineData()
+        
       } else {
         gId = ''
         Swal.fire({
@@ -590,7 +608,7 @@
 
   let gUrl, gId, gData;
 
-  document.addEventListener("DOMContentLoaded", async function () {
+  /*document.addEventListener("DOMContentLoaded", async function () {
     try {
       loadingStart()    
       
@@ -613,12 +631,56 @@
     } catch (error) {
       console.error("Unexpected error in DOMContentLoaded:", error);
     }
-  });
-
+  });*/
   
 
-  window.onbeforeunload = function(event) {  
+  document.addEventListener("DOMContentLoaded", async function () {
+    try {
+      loadingStart();
+      console.log("start");
+
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      //console.log("ID:", id);
+      if (!id) {
+        loadingEnd();
+        console.log("No ID found in URL.");
+        return;
+      }
+      
+      gUrl = mainUrl + '?id=' + id;
+
+      const LOADED_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 ชั่วโมง
+      const stored_exp = await store.getItem('loaded:' + id);
+      const now = Date.now();
+
+      if (stored_exp && stored_exp.dataLoaded && now - stored_exp.timestamp < LOADED_EXPIRY_MS) {
+        console.log("✅ dom loaded not expired use localforage");
+        gId = id
+        await callOffLineData()
+      } else {
+        console.log("⏰ dom loaded expired check API");
+        await getDataAPI(gUrl);
+        await store.setItem('loaded:' + id, {
+          timestamp: now,
+          dataLoaded: true
+        });
+      }
+
+    } catch (error) {
+      console.error("Unexpected error in DOMContentLoaded:", error);
+    } finally {
+      letGoTrim();
+      preventFormSubmit();
+    }
+  });
+  
+
+  window.onbeforeunload = function(event) {    
     event.preventDefault();
     event.returnValue = ''; // จำเป็นสำหรับบางเบราว์เซอร์ (เช่น Chrome) 
       //return confirm('Confirm refresh');
   };
+
+  
+
