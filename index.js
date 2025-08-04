@@ -131,7 +131,8 @@
       const lUserData = await store.getItem(item_name);
       const init = lUserData || null;
       const now = Date.now();
-      const numDays = 1 * 24 * 60 * 60 * 1000; // 1 day
+      const numDays = 12 * 60 * 60 * 1000; // 12 hours
+      // const numDays = 1 * 24 * 60 * 60 * 1000; // 1 day
       // const numDays = 5 * 60 * 1000; // 5 min
 
       if (!init || !init.timestamp || (now - init.timestamp > numDays)) {
@@ -650,7 +651,7 @@
       
       gUrl = mainUrl + '?id=' + id;
 
-      const LOADED_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 ชั่วโมง
+      const LOADED_EXPIRY_MS = 12 * 60 * 60 * 1000; // 12 ชั่วโมง
       const stored_exp = await store.getItem('loaded:' + id);
       const now = Date.now();
 
@@ -673,8 +674,7 @@
       letGoTrim();
       preventFormSubmit();
     }
-  });
-  
+  });  
 
   window.onbeforeunload = function(event) {    
     event.preventDefault();

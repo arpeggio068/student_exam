@@ -114,8 +114,7 @@ function form2PrvBtn(){
     } catch (error) {
       console.error("Error while retrieving or parsing all_rec_student:", error);
       all_rec_student = [];
-    }
-
+    }    
 
     const indx = all_rec_student.findIndex(r => r['id'] === rec['id']);
     all_rec_student.splice(indx, indx >= 0 ? 1 : 0);
