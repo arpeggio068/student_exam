@@ -694,17 +694,31 @@ button,
    STRICT RESET TOOTH CHECKBOX STATE ON MOBILE
 ========================================================= */
 
+/* =========================================================
+   FIX TOOTH CHECKBOX UNCHECKED COLOR ON SMARTPHONE
+   ยกเลิก checkbox แล้วให้กลับเป็นสีเทาเหมือนเดิม
+========================================================= */
+
 @media (hover: none) and (pointer: coarse) {
-  .container_cb .checkmark {
+
+  /* สถานะปกติ / หลังยกเลิกเลือก */
+  .container_cb .checkmark,
+  .container_cb:hover .checkmark,
+  .container_cb:active .checkmark,
+  .container_cb:focus .checkmark,
+  .container_cb:focus-within .checkmark {
     background: #eeeeee !important;
     color: #333333 !important;
     border-color: transparent !important;
+    box-shadow: none !important;
   }
 
+  /* สถานะ checked เท่านั้นที่เป็นสีฟ้า */
   .container_cb input:checked ~ .checkmark,
   .container_cb .form-check-input:checked + .checkmark {
     background: #2196f3 !important;
     color: #ffffff !important;
     border-color: #2196f3 !important;
+    box-shadow: none !important;
   }
 }
