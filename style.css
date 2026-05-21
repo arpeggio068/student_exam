@@ -1,215 +1,710 @@
-    @font-face {
-        font-family: 'Sarabun';
-        src: url('public/fonts/Sarabun-Light.ttf') format('truetype');
-        font-weight: 300;
-    }
+/* =========================================================
+   COMPACT MODERN UI - Dental Student App
+   เน้นสวยขึ้น แต่ไม่รก ไม่กินพื้นที่จอมือถือ
+========================================================= */
 
-    @font-face {
-        font-family: 'Sarabun';
-        src: url('public/fonts/Sarabun-SemiBold.ttf') format('truetype');
-        font-weight: 600;
-    }
+/* ---------- Base ---------- */
+:root {
+  --c-bg: #f5f7fb;
+  --c-card: #ffffff;
+  --c-primary: #1976d2;
+  --c-primary-dark: #0d47a1;
+  --c-border: #dbe3ec;
+  --c-text: #263238;
+  --c-muted: #607d8b;
+  --c-soft: #e3f6fb;
+  --c-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
 
-    * {
-      font: 16px 'Sarabun', Arial, sans-serif;
-    }
+* {
+  box-sizing: border-box;
+  font-family: 'Sarabun', Arial, sans-serif;
+}
 
-  
-  h1,h5,h6 {
-    text-align: center;
-    margin-top: 10px;
-  }  
- 
-  .nav-link{
-      cursor:pointer;   
-      font-size: 1rem;
-  }  
- 
-   #loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10000;
-    background-color: rgba(255,255,255,0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-    
-  .nav {
-    background-color: #D7FCFB !important;
-  }
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-size: 16px;
+}
 
-  *{
-   box-sizing: border-box;
-  }
+/* ---------- Container ---------- */
+.container.position-relative {
+  max-width: 760px;
+  padding: 10px 14px;
+}
 
-  /*body {
-   font: 16px Arial;  
-  }*/
- 
-  .own-set{
-   padding: 10px;
-   width: 500px;
-   
-  }
+/* ---------- Top nav: compact แบบเดิม แต่สวยขึ้น ---------- */
+#navigation {
+  width: 100%;
+}
 
-  #divMenuUraianKerja{
-      border: 1px solid rgba(0,0,0,0.2);
-      padding: 20px;
-      margin-left:10px;
-      margin-right:10px;
-      margin-top: 15px;
-      background-color: #E3F5EE;
-      font-family: 'Prompt';
-   }
+.nav {
+  background: linear-gradient(180deg, #e8fbfc, #d8f4f6) !important;
+  border-bottom: 1px solid #c7e8ec;
+}
 
-   #divMenuUraianKerja22{
-      border: 1px solid rgba(0,0,0,0.2);
-      padding: 20px;
-      margin-left:10px;
-      margin-right:10px;
-      margin-top: 15px;
-      background-color:#F5EEF8 ;
-      font-family: 'Prompt';
-   }
+.main-nav {
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  box-shadow: none;
+}
 
-  div.ui-datepicker, .ui-datepicker input{font-size:110%;}
+.main-nav .nav-item {
+  flex: 1 1 0;
+}
 
-  label.required::before {
+.nav-link,
+.main-nav .nav-link {
+  cursor: pointer;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 9px 4px;
+  color: #0875bd;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.main-nav .nav-link:hover {
+  background: rgba(25, 118, 210, 0.08);
+  color: var(--c-primary-dark);
+}
+
+/* ---------- Header title: ไม่ใช้กล่องใหญ่ ---------- */
+.container > .row:first-child {
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+.container > .row:first-child h6 {
+  margin: 0;
+  color: #37474f;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ไม่ใส่ icon หน้าหัวข้อ เพื่อประหยัดพื้นที่ */
+.container > .row:first-child h6::before {
+  content: "";
+}
+
+/* ---------- Section: ไม่ทำ card ใหญ่หลายชั้น ---------- */
+#main_select,
+#table_app,
+#form1,
+#form2 {
+  margin-bottom: 10px;
+}
+
+/* เฉพาะ form ค่อยให้เป็น card เบา ๆ */
+#main_select:not(:empty),
+#form1:not(:empty),
+#form2:not(:empty) {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: var(--c-shadow);
+}
+
+/* table ไม่ต้องครอบ card ใหญ่เกิน */
+#table_app:not(:empty) {
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border: 0;
+}
+
+/* ---------- Row spacing compact ---------- */
+.row.my-2 {
+  margin-top: 0.55rem !important;
+  margin-bottom: 0.55rem !important;
+}
+
+/* ---------- Labels ---------- */
+.label_main,
+.label_main2,
+.form-label {
+  color: #5e35b1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+label.required::before {
   content: '*';
   margin-right: 4px;
   color: red;
-  }
-
-  #maincontainer{
-    display: none;
-  }
-  
-  p{
-    font-size: 0.8em;
-  } 
-
-  /*.container_cb {
-    display: inline;
-    position: relative;
-    padding-left: 15px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    }*/
-
-    .container_cb {
-    display: inline-block; /* เปลี่ยนจาก inline เป็น inline-block เพื่อควบคุมขนาดและระยะ */
-    position: relative;
-    padding-left: 17px; /* เพิ่มจาก 15px เป็น 35px ให้เว้นที่สำหรับ checkbox */
-    margin-bottom: 10px;
-    margin-right: 15px;  /*✅ เพิ่มระยะห่างระหว่าง label */
-    cursor: pointer;
-    font-size: 20px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
-
-
-/* Hide the browser's default checkbox */
-.container_cb input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+/* ---------- Input / Select compact ---------- */
+.form-control,
+.form-select {
+  min-height: 42px;
+  border: 1px solid #cfd8dc;
+  border-radius: 7px;
+  color: var(--c-text);
+  background-color: #fff;
+  font-size: 1rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  box-shadow: none;
 }
 
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.13);
 }
 
-/* On mouse-over, add a grey background color */
-.container_cb:hover input ~ .checkmark {
-  background-color: #ccc;
+.form-control:disabled {
+  background: #f1f3f5;
+  color: #546e7a;
 }
 
-/* When the checkbox is checked, add a blue background */
-.container_cb input:checked ~ .checkmark {
-  background-color: #2196F3;
+.invalid-feedback {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #d32f2f;
+  text-align: left;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+/* ---------- Button compact ---------- */
+.btn {
+  min-height: 42px;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: none;
 }
 
-/* Show the checkmark when checked */
-.container_cb input:checked ~ .checkmark:after {
-  display: none;
+.btn-primary {
+  background: #1565c0;
+  border-color: #1565c0;
 }
 
-/* Style the checkmark/indicator */
-.container_cb .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+.btn-primary:hover {
+  background: #0d47a1;
+  border-color: #0d47a1;
 }
 
-#form1{
-  display: none;
+.btn-success {
+  background: #2e7d32;
+  border-color: #2e7d32;
 }
 
-#form2{
-  display: none;
+.btn-success:hover {
+  background: #1b5e20;
+  border-color: #1b5e20;
 }
 
-#a_hide{
-  display: block;
-}
-
-#showNeed_dfilling{
-  display: none;
-}
-
-.label_main{
-  color:purple;
-}
-
-.label_main2{
-  color:purple;
+#showBtn,
+#save_btn {
+  width: 100%;
 }
 
 .w3-right {
-    float: right!important;
+  float: right !important;
+}
+
+/* ---------- main_select layout compact ---------- */
+#main_select .row:first-child {
+  margin-bottom: 6px !important;
+}
+
+#main_select .form-select,
+#main_select .btn {
+  min-height: 42px;
+}
+
+/* =========================================================
+   TOOTH CHECKBOX - VERY COMPACT
+   ใกล้ของเดิมที่สุด / ไม่ล้นจอโทรศัพท์
+========================================================= */
+
+/* กลุ่มรหัสฟัน ไม่ทำเป็น card ใหญ่ */
+#showNeed_dfilling,
+#showNeed_dextract,
+#showNeed_pfilling,
+#showNeed_sealant {
+  margin-top: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* หัวข้อของกลุ่มรหัสฟัน */
+#showNeed_dfilling .row:first-child,
+#showNeed_dextract .row:first-child,
+#showNeed_pfilling .row:first-child,
+#showNeed_sealant .row:first-child {
+  margin-top: 4px !important;
+  margin-bottom: 2px !important;
+}
+
+/* ลดระยะห่างระหว่างแถวรหัสฟัน */
+#showNeed_dfilling .row.my-2,
+#showNeed_dextract .row.my-2,
+#showNeed_pfilling .row.my-2,
+#showNeed_sealant .row.my-2 {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+
+/* คอลัมน์ที่ครอบ checkbox ให้ไม่เพิ่มช่องว่างเกิน */
+#showNeed_dfilling .col,
+#showNeed_dextract .col,
+#showNeed_pfilling .col,
+#showNeed_sealant .col {
+  line-height: 1.35;
+}
+
+/* label checkbox */
+.container_cb {
+  display: inline-block !important;
+  position: relative !important;
+
+  min-width: auto !important;
+  width: auto !important;
+  height: auto !important;
+
+  margin: 1px 5px 5px 0 !important;
+  padding: 0 !important;
+
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+}
+
+/* ซ่อน checkbox จริง */
+.container_cb input,
+.container_cb .form-check-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ปุ่มรหัสฟัน compact ใกล้ของเดิม */
+.checkmark {
+  position: static !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  min-width: 27px !important;
+  height: 25px !important;
+  padding: 0 4px !important;
+
+  border: 0 !important;
+  border-radius: 1px !important;
+
+  background: #eeeeee !important;
+  color: #333333 !important;
+
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* hover เบา ๆ */
+.container_cb:hover .checkmark {
+  background: #dfefff !important;
+  color: #1565c0 !important;
+}
+
+/* checked */
+.container_cb input:checked ~ .checkmark,
+.container_cb .form-check-input:checked + .checkmark {
+  background: #2196f3 !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+}
+
+/* ปิด checkmark pseudo เดิม */
+.checkmark:after,
+.container_cb .checkmark:after,
+.container_cb input:checked ~ .checkmark:after {
+  display: none !important;
+}
+
+/* คง logic เดิม */
+#form1 {
+  display: none;
+}
+
+#form2 {
+  display: none;
+}
+
+#a_hide {
+  display: block;
+}
+
+#showNeed_dfilling {
+  display: none;
+}
+
+#maincontainer {
+  display: none;
+}
+
+/* ---------- DataTable compact ---------- */
+table.table-bordered,
+table.table-bordered th,
+table.table-bordered td {
+  border: 1px solid #dee2e6 !important;
+}
+
+table.table-bordered {
+  border-collapse: collapse !important;
+}
+
+.table {
+  margin-bottom: 0;
+  background: #fff;
+  font-size: 0.95rem;
+}
+
+.table thead th {
+  background: #fafafa;
+  color: #37474f;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table td,
+.table th {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.dataTables_wrapper {
+  background: transparent;
+}
+
+.dataTables_wrapper .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  max-width: 220px;
+  height: 36px;
+  border: 1px solid #cfd8dc;
+  border-radius: 5px;
+  padding: 4px 8px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+  height: 36px;
+  border: 1px solid #cfd8dc;
+  border-radius: 5px;
+  padding: 4px 26px 4px 8px;
+}
+
+/* ---------- Loading compact ---------- */
+#loading {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: rgba(255, 255, 255, 0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#loading .spinner-grow {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  color: #29980A !important;
+}
+
+#loading span {
+  margin-top: 8px;
+  color: #E1940E !important;
+  font-weight: 600;
+}
+
+/* ---------- Other old blocks ---------- */
+.own-set {
+  padding: 10px;
+  width: 500px;
+}
+
+#divMenuUraianKerja,
+#divMenuUraianKerja22 {
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
+  border-radius: 8px;
+  font-family: 'Sarabun', Arial, sans-serif;
+}
+
+#divMenuUraianKerja {
+  background-color: #E3F5EE;
+}
+
+#divMenuUraianKerja22 {
+  background-color: #F5EEF8;
+}
+
+div.ui-datepicker,
+.ui-datepicker input {
+  font-size: 110%;
+}
+
+p {
+  font-size: 0.85rem;
+}
+
+.swal2-popup {
+  font-family: 'Sarabun', Arial, sans-serif !important;
+  border-radius: 12px !important;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 576px) {
+  .container.position-relative {
+    padding: 8px 14px;
   }
 
-  table.table-bordered,
-    table.table-bordered th,
-    table.table-bordered td {
-      border: 1px solid #dee2e6 !important;
+  .nav-link,
+  .main-nav .nav-link {
+    padding: 8px 2px;
+    font-size: 0.95rem;
   }
 
-    /* เพิ่มเส้นขอบรอบตาราง */
-  table.table-bordered {
-      border-collapse: collapse !important;
+  .container > .row:first-child {
+    margin-top: 12px !important;
+    margin-bottom: 10px !important;
   }
+
+  .container > .row:first-child h6 {
+    font-size: 1rem;
+  }
+
+  #main_select:not(:empty),
+  #form1:not(:empty),
+  #form2:not(:empty) {
+    padding: 10px;
+    border-radius: 9px;
+  }
+
+  .form-control,
+  .form-select,
+  .btn {
+    min-height: 42px;
+    font-size: 1rem;
+  }
+
+  /* ไม่บังคับ select เป็นคนละบรรทัดทั้งหมด เพื่อไม่ให้ยาวเกิน */
+  #main_select .row:nth-child(2) .col {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  #main_select .row:nth-child(2) .col:first-child {
+    padding-left: 12px;
+  }
+
+  #main_select .row:nth-child(2) .col:last-child {
+    padding-right: 12px;
+  }
+
+  .table {
+    font-size: 0.92rem;
+  }
+
+  .table td,
+  .table th {
+    padding: 7px 8px;
+  }
+
+  /* checkbox รหัสฟันบนมือถือ ให้เล็กใกล้ของเดิม */
+  #showNeed_dfilling,
+  #showNeed_dextract,
+  #showNeed_pfilling,
+  #showNeed_sealant {
+    margin-top: 3px !important;
+    padding: 0 !important;
+  }
+
+  #showNeed_dfilling .row.my-2,
+  #showNeed_dextract .row.my-2,
+  #showNeed_pfilling .row.my-2,
+  #showNeed_sealant .row.my-2 {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .container_cb {
+    margin: 1px 4px 5px 0 !important;
+  }
+
+  .checkmark {
+    min-width: 26px !important;
+    height: 24px !important;
+    padding: 0 4px !important;
+    font-size: 0.88rem !important;
+  }
+
+  .own-set {
+    width: 100%;
+  }
+}
+
+/* ---------- Mobile main_select row compact ---------- */
+@media (max-width: 576px) {
+  #main_select .row:nth-child(2) {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  #main_select .row:nth-child(2) .col {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #main_select .row:nth-child(2) .col:nth-child(1),
+  #main_select .row:nth-child(2) .col:nth-child(2) {
+    flex: 1 1 0;
+  }
+
+  #main_select .row:nth-child(2) .col:nth-child(3) {
+    flex: 0 0 76px;
+  }
+}
+
+/* =========================================================
+   FONT WEIGHT - NORMAL / NOT TOO BOLD
+   ลดความหนาของตัวอักษรให้ใกล้ของเดิม
+========================================================= */
+
+/* ตัวอักษรหลัก */
+body,
+input,
+select,
+textarea,
+button,
+.form-control,
+.form-select,
+.btn,
+.table,
+.table td,
+.table th,
+.nav-link,
+.main-nav .nav-link {
+  font-weight: 400 !important;
+}
+
+/* หัวข้อหลัก */
+.container > .row:first-child h6 {
+  font-weight: 400 !important;
+}
+
+/* label ของฟอร์ม */
+.label_main,
+.label_main2,
+.form-label {
+  font-weight: 400 !important;
+}
+
+/* รหัสฟัน checkbox */
+.checkmark {
+  font-weight: 400 !important;
+}
+
+/* ตอนเลือก checkbox ไม่ต้องหนาขึ้น */
+.container_cb input:checked ~ .checkmark,
+.container_cb .form-check-input:checked + .checkmark {
+  font-weight: 400 !important;
+}
+
+/* หัวตารางไม่ต้องหนามาก */
+.table thead th {
+  font-weight: 400 !important;
+}
+
+/* ปุ่ม nav ด้านบน */
+.nav-link,
+.main-nav .nav-link {
+  font-weight: 400 !important;
+}
+
+/* ปุ่มทั่วไป */
+.btn {
+  font-weight: 400 !important;
+}
+
+/* SweetAlert */
+.swal2-popup,
+.swal2-title,
+.swal2-html-container,
+.swal2-confirm,
+.swal2-cancel {
+  font-weight: 400 !important;
+}
+
+.container_cb {
+  margin: 1px 7px 5px 0 !important;
+}
+
+/* =========================================================
+   SMARTPHONE TOOTH CHECKBOX SPACING
+   เพิ่มช่องไฟแนวนอนของ checkbox เฉพาะจอโทรศัพท์
+========================================================= */
+
+@media (max-width: 576px) {
+  .container_cb {
+    margin: 1px 7px 5px 0 !important;
+  }
+
+  .checkmark {
+    min-width: 26px !important;
+    height: 24px !important;
+    padding: 0 4px !important;
+    font-size: 0.88rem !important;
+  }
+}
+
+
+/* =========================================================
+   STRICT RESET TOOTH CHECKBOX STATE ON MOBILE
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .container_cb .checkmark {
+    background: #eeeeee !important;
+    color: #333333 !important;
+    border-color: transparent !important;
+  }
+
+  .container_cb input:checked ~ .checkmark,
+  .container_cb .form-check-input:checked + .checkmark {
+    background: #2196f3 !important;
+    color: #ffffff !important;
+    border-color: #2196f3 !important;
+  }
+}
