@@ -722,3 +722,44 @@ button,
     box-shadow: none !important;
   }
 }
+
+/* =========================================================
+   TOOTH CHECKBOX SIZE - SLIGHTLY BIGGER
+   เพิ่มขนาด checkbox และตัวเลขภายในเล็กน้อย
+========================================================= */
+
+/* ขนาดทั่วไป */
+.checkmark {
+  min-width: 29px !important;
+  height: 27px !important;
+  padding: 0 5px !important;
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+}
+
+/* ช่องไฟแนวนอน ยังไม่ให้ล้น */
+.container_cb {
+  margin: 1px 7px 6px 0 !important;
+}
+
+/* smartphone */
+@media (max-width: 576px) {
+  .checkmark {
+    min-width: 29px !important;
+    height: 27px !important;
+    padding: 0 5px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .container_cb {
+    margin: 1px 6px 6px 0 !important;
+  }
+}
+
+/* checked state */
+.container_cb input:checked ~ .checkmark,
+.container_cb .form-check-input:checked + .checkmark {
+  background: #2196f3 !important;
+  color: #ffffff !important;
+  font-weight: 400 !important;
+}
