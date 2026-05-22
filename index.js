@@ -361,7 +361,7 @@
     //console.log("current URL =", window.location.href);
     console.log("id from URL =", JSON.stringify(id));
 
-    /*if (!id || !String(id).trim().startsWith("token-")) {
+    if (!id || !String(id).trim().startsWith("token-")) {
       loadingEnd();
 
       await store.removeItem("student_data");
@@ -376,7 +376,7 @@
 
       console.log("[studentLoad] blocked: empty or invalid token");
       return;
-    }*/
+    }
 
     const obj_json = JSON.stringify({ id });
 
