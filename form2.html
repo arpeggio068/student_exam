@@ -181,7 +181,9 @@
   <div class="row my-2">       
       <div class="col"> 
         <label class="label_main2">D ฟันแท้ที่ต้องถอน/รักษาคลองรากฟัน</label>
-        <input id="need_pextract" class="form-control">
+        <input id="need_pextract" class="form-control" placeholder="ตัวอย่างเช่น 36 หรือ 11 36 46"
+        oninput="setPextractEvent(this.value)">
+        <div style="text-align:left;" class = "invalid-feedback">ตัวอย่างเช่น 36 หรือ 11 36 46</div>  
       </div>
   </div>
 

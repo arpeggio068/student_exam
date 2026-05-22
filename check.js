@@ -111,8 +111,70 @@ function validateForm1(){
     }
     return sw;
   }
+
+ function isValidNeedPextractValue(value) {
+  const pteeth_array = [
+    "11","12","13","14","15","16","17",
+    "21","22","23","24","25","26","27",
+    "31","32","33","34","35","36","37",
+    "41","42","43","44","45","46","47"
+  ];
+
+  const text = String(value || "").trim();
+
+  // ค่าว่าง = ไม่ผิด
+  if (text === "") {
+    return true;
+  }
+
+  const arr = text.split(/\s+/);
+  return arr.every(p => pteeth_array.includes(p));
+}
+
+
+function setNeedPextractInvalid(message) {
+  const el = document.getElementById("need_pextract");
+  if (!el) return;
+
+  el.classList.add("is-invalid");
+  el.classList.remove("is-valid");
+
+  const feedback = el.parentElement.querySelector(".invalid-feedback");
+  if (feedback) {
+    feedback.textContent = message;
+    feedback.style.display = "block";
+  }
+}
+
+
+function clearNeedPextractInvalid() {
+  const el = document.getElementById("need_pextract");
+  if (!el) return;
+
+  el.classList.remove("is-invalid");
+
+  const feedback = el.parentElement.querySelector(".invalid-feedback");
+  if (feedback) {
+    feedback.style.display = "none";
+  }
+}
+
+
+function setPextractEvent(val) {
+  const value = String(val || "").trim();
+
+  // ถ้าว่าง หรือรูปแบบถูกต้อง ให้ล้าง invalid feedback
+  if (value === "" || isValidNeedPextractValue(value)) {
+    clearNeedPextractInvalid();
+    return;
+  }
+
+  // ถ้ายังพิมพ์ผิดอยู่ ให้แสดง feedback ต่อ
+  setNeedPextractInvalid("ตัวอย่างเช่น 36 หรือ 11 36 46");
+}  
   
-  function checkForm2(){
+ function checkForm2(){
+     clearNeedPextractInvalid();     
      const dteeth = $('#dteeth').val()    
      const dextract = $('#dextract').val()
      const pteeth = $('#pteeth').val()
@@ -124,15 +186,11 @@ function validateForm1(){
      $('input[name="need_pfilling"]:checked').each((i,ele)=>{need_pfilling.push($(ele).val())})
 
      let need_sealant = []
-     $('input[name="need_sealant"]:checked').each((i,ele)=>{need_sealant.push($(ele).val())})
+     $('input[name="need_sealant"]:checked').each((i,ele)=>{need_sealant.push($(ele).val())})     
      
-     const pteeth_array = ["11","12","13","14","15","16","17",
-                           "21","22","23","24","25","26","27",
-                           "31","32","33","34","35","36","37",
-                           "41","42","43","44","45","46","47",""
-                          ]
-     const need_pextract = $('#need_pextract').val().split(' ') 
-     const error_pextract = typeof([...need_pextract].find(p => pteeth_array.indexOf(p) === -1)) == 'undefined' ? true : false 
+     const need_pextract_text = $('#need_pextract').val().trim();
+     const need_pextract = need_pextract_text === "" ? [] : need_pextract_text.split(/\s+/);
+     const error_pextract = isValidNeedPextractValue(need_pextract_text); 
      
      let sw = true 
      switch(true){
@@ -207,7 +265,7 @@ function validateForm1(){
              
               sw = false;            
             break;
-         case Number(pcaries) > 0 && need_pfilling.length == 0 && need_pextract[0] == '' : 
+         case Number(pcaries) > 0 && need_pfilling.length == 0 && need_pextract.length == 0 : 
             Swal.fire({
                      position: 'center',
                      icon: 'error',
@@ -218,6 +276,9 @@ function validateForm1(){
               sw = false;            
             break;
          case error_pextract == false : 
+            setNeedPextractInvalid(
+                "ตัวอย่างเช่น 36 หรือ 11 36 46"
+            );
             Swal.fire({
                      position: 'center',
                      icon: 'error',
@@ -228,7 +289,7 @@ function validateForm1(){
              
               sw = false;            
             break;        
-         case need_pfilling.length + need_pextract.length > Number(pcaries) && need_pextract[0] != '': 
+         case need_pfilling.length + need_pextract.length > Number(pcaries) && need_pextract.length > 0: 
             Swal.fire({
                      position: 'center',
                      icon: 'error',
@@ -238,7 +299,7 @@ function validateForm1(){
              
               sw = false;            
             break;
-         case Number(pteeth) == 0 && need_pextract[0] != '': 
+         case Number(pteeth) == 0 && need_pextract.length > 0: 
             Swal.fire({
                      position: 'center',
                      icon: 'error',

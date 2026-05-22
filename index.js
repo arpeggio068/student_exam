@@ -581,6 +581,9 @@
           console.warn("Invalid JSON in all_rec_student:", e);
         }
       }
+      else{
+        console.log("all_rec_student not found");
+      }
 
       // ต้องแสดงจำนวนเสมอ แม้ link/token จะหมดอายุ
       $('#val_total').text(" " + all_rec_student.length);
@@ -603,7 +606,7 @@
       await offlineArrayReturned();
 
       // โหลดข้อมูลรอ upload เสมอ
-      await loadPendingUploadData();
+      // await loadPendingUploadData();
 
     } catch (error) {
       Swal.fire({
@@ -668,7 +671,7 @@
 
         clearStudentUI();
 
-        await loadPendingUploadData();
+        //await loadPendingUploadData();
 
         return false;
       }
@@ -683,7 +686,7 @@
 
       console.error("[GET] Fetch Error:", error.message);
 
-      await loadPendingUploadData();
+      //await loadPendingUploadData();
 
       return false;
 
@@ -755,10 +758,9 @@
   document.addEventListener("DOMContentLoaded", async function () {
     try {
       loadingStart();
-      console.log("========== DOMContentLoaded START ==========");
+      console.log("========== DOMContentLoaded START ==========");      
 
-      // โหลดจำนวนข้อมูลที่รอ upload เสมอ
-      await loadPendingUploadData();
+      await loadPendingUploadData();    
 
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
@@ -808,7 +810,7 @@
         const ok = await getDataAPI(url);
 
         console.log("[DOM] getDataAPI ok =", ok);
-      }
+      }      
 
     } catch (error) {
       console.error("[DOM] Unexpected error:", error);
