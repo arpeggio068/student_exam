@@ -617,13 +617,12 @@
       loadingEnd();
     }
   }
-
   
 
   async function getDataAPI(url) {
     try {
       console.log("========== getDataAPI START ==========");
-      console.log("[GET] url =", url);
+      //console.log("[GET] url =", url);
 
       const response = await fetch(url, {
         method: 'GET',
@@ -631,18 +630,17 @@
 
       const data = await response.json();
 
-      console.log("[GET] response data =", data);
+      //console.log("[GET] response data =", data);
 
-      if (data.data && data.data.length > 0) {        
+      if (data.data && data.data.length > 0) {    
 
-        //console.log("[GET] gData =", gData);
-        //console.log("[GET] gId set from gData[0] =", JSON.stringify(gId));
-        console.log("[GET] status =", data.status);
-        console.log("[GET] message =", data.message);
-        console.log("[GET] req_id =", data.req_id);
-        console.log("[GET] token_found =", data.token_found);
-        console.log("[GET] token_match =", data.token_match);
-        console.log("[GET] found_row =", data.found_row);
+       
+        //console.log("[GET] status =", data.status);
+        //console.log("[GET] message =", data.message);
+        //console.log("[GET] req_id =", data.req_id);
+        //console.log("[GET] token_found =", data.token_found);
+        //console.log("[GET] token_match =", data.token_match);
+        //console.log("[GET] found_row =", data.found_row);
 
         Swal.fire({
           position: 'center',
@@ -655,10 +653,7 @@
         await callOffLineData();
 
         return true;
-      } else {
-        gId = '';
-
-        console.log("[GET] token invalid, gId cleared");
+      } else {        
 
         Swal.fire({
           position: 'center',
@@ -667,7 +662,7 @@
           showConfirmButton: true
         });
 
-        console.warn('Token not found or expired');
+        //console.warn('Token not found or expired');
 
         await store.removeItem('student_data');
 
@@ -755,88 +750,7 @@
   }); 
 
 
-  //let gUrl, gId, gData;  
-  
-
- 
-
-  /*document.addEventListener("DOMContentLoaded", async function () {
-    try {
-      loadingStart();
-      console.log("========== DOMContentLoaded START ==========");
-
-      await loadPendingUploadData();
-
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-
-      console.log("[DOM] current URL =", window.location.href);
-      console.log("[DOM] id from URL =", JSON.stringify(id));
-
-      if (!id) {
-        loadingEnd();
-        console.log("[DOM] No ID found in URL.");
-
-        Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          text: 'ไม่พบรหัสลิงก์ token',
-          showConfirmButton: true
-        });
-
-        return;
-      }
-
-      const gUrl = mainUrl + '?id=' + id;
-
-      const LOADED_EXPIRY_MS = main_expired_time;
-      const loadedKey = 'loaded:' + id;
-      const stored_exp = await store.getItem(loadedKey);
-      const now = Date.now();
-
-      console.log("[DOM] gUrl =", gUrl);
-      console.log("[DOM] loadedKey =", loadedKey);
-      console.log("[DOM] main_expired_time =", LOADED_EXPIRY_MS);
-      console.log("[DOM] stored_exp =", stored_exp);
-
-      if (stored_exp) {
-        console.log("[DOM] cache age ms =", now - stored_exp.timestamp);
-        console.log("[DOM] cache valid =", now - stored_exp.timestamp < LOADED_EXPIRY_MS);
-      }
-
-      if (stored_exp && stored_exp.dataLoaded && now - stored_exp.timestamp < LOADED_EXPIRY_MS) {
-        console.log("✅ [DOM] use localForage loaded cache, skip API check");
-        //gId = id;
-
-        //console.log("[DOM] gId set from URL/cache =", JSON.stringify(gId));
-
-        await callOffLineData();
-
-      } else {
-        console.log("⏰ [DOM] cache expired or not found, check API");
-
-        const ok = await getDataAPI(gUrl);
-
-        console.log("[DOM] getDataAPI ok =", ok);
-
-        if (ok) {
-          await store.setItem(loadedKey, {
-            timestamp: now,
-            dataLoaded: true
-          });
-
-          console.log("[DOM] saved loaded cache =", loadedKey);
-        }
-      }
-
-    } catch (error) {
-      console.error("[DOM] Unexpected error:", error);
-    } finally {
-      letGoTrim();
-      preventFormSubmit();
-      console.log("========== DOMContentLoaded END ==========");
-    }
-  });*/
+  //let gUrl, gId, gData;
 
   document.addEventListener("DOMContentLoaded", async function () {
     try {
@@ -849,12 +763,12 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id");
 
-      console.log("[DOM] current URL =", window.location.href);
-      console.log("[DOM] id from URL =", JSON.stringify(id));
+      //console.log("[DOM] current URL =", window.location.href);
+      //console.log("[DOM] id from URL =", JSON.stringify(id));
 
       if (!id) {
         loadingEnd();
-        console.log("[DOM] No ID found in URL.");
+        //console.log("[DOM] No ID found in URL.");
 
         Swal.fire({
           position: 'center',
@@ -879,9 +793,9 @@
         studentCache.timestamp &&
         now - studentCache.timestamp < main_expired_time;
 
-      console.log("[DOM] studentCache =", studentCache);
-      console.log("[DOM] studentCache age ms =", studentCache?.timestamp ? now - studentCache.timestamp : null);
-      console.log("[DOM] studentCache valid =", studentCacheValid);
+      //console.log("[DOM] studentCache =", studentCache);
+      //console.log("[DOM] studentCache age ms =", studentCache?.timestamp ? now - studentCache.timestamp : null);
+      //console.log("[DOM] studentCache valid =", studentCacheValid);
 
       if (studentCacheValid) {
         console.log("✅ [DOM] use student_data cache, skip API check");
